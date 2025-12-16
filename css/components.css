@@ -102,26 +102,241 @@
     height: 100%;
     opacity: 0;
     pointer-events: none;
-    mix-blend-mode: screen;
 }
 
-.archive-item:hover .glitch-layer {
+/* Hide white text completely on hover, show only RGB */
+#glitch-text:hover .glitch-main {
+    opacity: 0;
+}
+
+#glitch-text:hover .glitch-layer {
     opacity: 1;
 }
 
+/* RED layer - covers full height with fragmented slices */
 .glitch-layer.red {
-    color: #ff0000;
-    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    color: #ff0040;
+    animation: glitch-red 0.15s steps(2) infinite;
 }
 
-.glitch-layer.blue {
-    color: #0000ff;
-    clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%);
+/* CYAN layer - chromatic opposite of red */
+.glitch-layer.cyan {
+    color: #00ffff;
+    animation: glitch-cyan 0.12s steps(3) infinite;
 }
 
-.glitch-layer.green {
-    color: #00ff00;
-    clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+/* Glitch Keyframes - Chaotic fragmented slices covering full text */
+@keyframes glitch-red {
+    0% {
+        transform: translate(-15px, 0) skewX(-5deg);
+        clip-path: polygon(0 0%, 100% 0%, 100% 20%, 0 20%,
+                0 25%, 100% 25%, 100% 35%, 0 35%,
+                0 60%, 100% 60%, 100% 75%, 0 75%);
+    }
+
+    25% {
+        transform: translate(12px, 0) skewX(3deg);
+        clip-path: polygon(0 5%, 100% 5%, 100% 18%, 0 18%,
+                0 40%, 100% 40%, 100% 55%, 0 55%,
+                0 80%, 100% 80%, 100% 95%, 0 95%);
+    }
+
+    50% {
+        transform: translate(-10px, 0) skewX(-2deg);
+        clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%,
+                0 45%, 100% 45%, 100% 60%, 0 60%,
+                0 70%, 100% 70%, 100% 85%, 0 85%);
+    }
+
+    75% {
+        transform: translate(18px, 0) skewX(4deg);
+        clip-path: polygon(0 0%, 100% 0%, 100% 12%, 0 12%,
+                0 35%, 100% 35%, 100% 50%, 0 50%,
+                0 65%, 100% 65%, 100% 80%, 0 80%);
+    }
+
+    100% {
+        transform: translate(-8px, 0) skewX(-3deg);
+        clip-path: polygon(0 10%, 100% 10%, 100% 25%, 0 25%,
+                0 50%, 100% 50%, 100% 65%, 0 65%,
+                0 85%, 100% 85%, 100% 100%, 0 100%);
+    }
+}
+
+@keyframes glitch-cyan {
+    0% {
+        transform: translate(12px, 0) skewX(4deg);
+        clip-path: polygon(0 8%, 100% 8%, 100% 22%, 0 22%,
+                0 38%, 100% 38%, 100% 52%, 0 52%,
+                0 72%, 100% 72%, 100% 88%, 0 88%);
+    }
+
+    20% {
+        transform: translate(-18px, 0) skewX(-5deg);
+        clip-path: polygon(0 0%, 100% 0%, 100% 15%, 0 15%,
+                0 30%, 100% 30%, 100% 45%, 0 45%,
+                0 60%, 100% 60%, 100% 78%, 0 78%);
+    }
+
+    40% {
+        transform: translate(14px, 0) skewX(2deg);
+        clip-path: polygon(0 18%, 100% 18%, 100% 32%, 0 32%,
+                0 48%, 100% 48%, 100% 62%, 0 62%,
+                0 78%, 100% 78%, 100% 92%, 0 92%);
+    }
+
+    60% {
+        transform: translate(-10px, 0) skewX(-4deg);
+        clip-path: polygon(0 5%, 100% 5%, 100% 20%, 0 20%,
+                0 42%, 100% 42%, 100% 58%, 0 58%,
+                0 82%, 100% 82%, 100% 100%, 0 100%);
+    }
+
+    80% {
+        transform: translate(16px, 0) skewX(3deg);
+        clip-path: polygon(0 12%, 100% 12%, 100% 28%, 0 28%,
+                0 35%, 100% 35%, 100% 50%, 0 50%,
+                0 68%, 100% 68%, 100% 85%, 0 85%);
+    }
+
+    100% {
+        transform: translate(-12px, 0) skewX(-2deg);
+        clip-path: polygon(0 2%, 100% 2%, 100% 18%, 0 18%,
+                0 45%, 100% 45%, 100% 60%, 0 60%,
+                0 75%, 100% 75%, 100% 92%, 0 92%);
+    }
+}
+
+/* Main text glitch animation on hover */
+#glitch-text:hover h2:first-child {
+    animation: glitch-main 0.2s infinite;
+}
+
+@keyframes glitch-main {
+
+    0%,
+    90%,
+    100% {
+        transform: translate(0);
+    }
+
+    10% {
+        transform: translate(-2px, 1px);
+    }
+
+    30% {
+        transform: translate(2px, -1px);
+    }
+
+    50% {
+        transform: translate(-1px, 2px);
+    }
+
+    70% {
+        transform: translate(1px, -2px);
+    }
+}
+
+/* Scanline overlay effect */
+#glitch-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 1px,
+            rgba(0, 0, 0, 0.3) 1px,
+            rgba(0, 0, 0, 0.3) 2px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 30;
+}
+
+#glitch-text:hover::before {
+    opacity: 1;
+}
+
+/* Noise grain overlay */
+#glitch-text::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0;
+    z-index: 25;
+    mix-blend-mode: overlay;
+}
+
+#glitch-text:hover::after {
+    opacity: 0.15;
+    animation: noise-shift 0.2s steps(10) infinite;
+}
+
+@keyframes noise-shift {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(-5%, -5%);
+    }
+
+    40% {
+        transform: translate(5%, 5%);
+    }
+
+    60% {
+        transform: translate(-10%, 5%);
+    }
+
+    80% {
+        transform: translate(10%, -5%);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* Flicker effect on main text */
+#glitch-text:hover h2:first-child {
+    animation: glitch-main 0.2s infinite, glitch-flicker 0.15s infinite;
+}
+
+@keyframes glitch-flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    5% {
+        opacity: 0.7;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    55% {
+        opacity: 0.4;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0.85;
+    }
 }
 
 /* ==================== ECLIPSE EFFECT (3D Shadows) ==================== */
