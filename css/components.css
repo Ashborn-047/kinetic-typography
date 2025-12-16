@@ -1,0 +1,182 @@
+/* ==========================================================================
+   COMPONENTS.CSS
+   Reusable component styles
+   ========================================================================== */
+
+/* ==================== CUSTOM CURSOR ==================== */
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: white;
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid white;
+    transition: width 0.2s, height 0.2s;
+}
+
+/* ==================== STORY MARKER (Section Labels) ==================== */
+.story-marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 2rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    height: auto;
+    max-height: calc(100% - 4rem);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+/* ==================== ARCHIVE GRID ITEMS ==================== */
+.archive-item {
+    border-right: 1px solid #1f2937;
+    /* gray-800 */
+    border-bottom: 1px solid #1f2937;
+    /* gray-800 */
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 2rem;
+    text-align: center;
+}
+
+.archive-item:hover {
+    background-color: #0f0f0f;
+}
+
+@media (min-width: 1024px) {
+    .archive-item:nth-child(3n) {
+        border-right: none;
+    }
+}
+
+/* ---------- Responsive Archive Text ---------- */
+.archive-item h2 {
+    font-size: clamp(2.5rem, 5vw, 5rem) !important;
+    white-space: nowrap;
+}
+
+/* ==================== INK EFFECT (SVG Filter) ==================== */
+.ink-effect {
+    filter: url(#ink-distortion);
+    transform-origin: center center;
+    will-change: filter;
+}
+
+/* ==================== GLITCH EFFECT ==================== */
+.glitch-wrapper {
+    position: relative;
+}
+
+.glitch-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.archive-item:hover .glitch-layer {
+    opacity: 1;
+}
+
+.glitch-layer.red {
+    color: #ff0000;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch-layer.blue {
+    color: #0000ff;
+    clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%);
+}
+
+.glitch-layer.green {
+    color: #00ff00;
+    clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+}
+
+/* ==================== ECLIPSE EFFECT (3D Shadows) ==================== */
+.eclipse-wrapper {
+    perspective: 500px;
+}
+
+.eclipse-char {
+    transform-style: preserve-3d;
+    display: inline-block;
+}
+
+.eclipse-shadow {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    transform: rotateX(90deg) translateZ(10px);
+    opacity: 0;
+    filter: blur(4px);
+    transition: opacity 0.3s;
+}
+
+.archive-item:hover .eclipse-shadow,
+#hero-ink-trigger:hover .eclipse-shadow {
+    opacity: 0.6;
+}
+
+/* ==================== LAYER CLONES (Chromatic Aberration) ==================== */
+.layer-clone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.archive-item:hover .layer-clone {
+    opacity: 1;
+}
+
+/* ==================== NAVIGATION ==================== */
+#nav-logo {
+    cursor: pointer;
+    position: relative;
+    z-index: 100;
+}
+
+/* ==================== 3D CANVAS CONTAINER ==================== */
+#canvas-mini {
+    pointer-events: none;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH - Typography Experiment</title>
+
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;700;800&family=VT323&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body class="bg-[#050505] min-h-screen flex flex-col">
+    <!-- Back Link -->
+    <nav class="p-6">
+        <a href="../index.html"
+            class="text-gray-400 hover:text-white transition-colors font-body text-sm uppercase tracking-widest">← Back
+            to Archive</a>
+    </nav>
+
+    <!-- Experiment Container -->
+    <main class="flex-1 flex flex-col items-center justify-center px-4">
+        <span class="font-body text-xs text-gray-500 mb-8">EXP_04</span>
+
+        <div class="text-center cursor-pointer relative" id="glitch-text">
+            <h1 class="font-display text-[15vw] font-bold uppercase tracking-tighter text-white relative z-20">GLITCH
+            </h1>
+            <h1 class="glitch-layer red font-display text-[15vw] font-bold uppercase tracking-tighter z-10">GLITCH</h1>
+            <h1 class="glitch-layer blue font-display text-[15vw] font-bold uppercase tracking-tighter z-10">GLITCH</h1>
+            <h1 class="glitch-layer green font-display text-[15vw] font-bold uppercase tracking-tighter z-10">GLITCH
+            </h1>
+        </div>
+
+        <p class="font-body text-lg text-gray-400 mt-8 max-w-md text-center">Digital signal decay and RGB displacement.
+        </p>
+    </main>
+
+    <script>
+        const glitchZone = document.querySelector('#glitch-text');
+        const glitchLayers = glitchZone.querySelectorAll('.glitch-layer');
+
+        glitchZone.addEventListener('mousemove', () => {
+            glitchLayers.forEach(layer => {
+                gsap.to(layer, {
+                    x: (Math.random() - 0.5) * 30,
+                    y: (Math.random() - 0.5) * 10,
+                    skewX: (Math.random() - 0.5) * 20,
+                    opacity: Math.random() > 0.1 ? 1 : 0,
+                    duration: 0.05,
+                    overwrite: true
+                });
+            });
+        });
+
+        glitchZone.addEventListener('mouseleave', () => {
+            glitchLayers.forEach(layer => {
+                gsap.to(layer, { x: 0, y: 0, skewX: 0, opacity: 0, duration: 0.2 });
+            });
+        });
+    </script>
+</body>
+
+</html>
